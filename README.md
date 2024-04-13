@@ -21,4 +21,4 @@ Feel free to explore and stay informed with Quick News!
 - News data is retrieved from an external API.
 - Built using React and Tailwind for the frontend development.
 
-Your feedback and suggestions for improvement are highly appreciated! If you have any questions or need assistance, feel free to reach out. Happy reading! 📰🚀
+Your feedback and suggestions for improvement are highly appreciated! Happy reading! 📰🚀
