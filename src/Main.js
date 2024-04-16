@@ -1,41 +1,29 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 import Mynewscard from './Components/Mynewscard';
+
 function Main() {
-const [news,newsSet]=useState([]);
-const [news1,newsSet1]=useState([]);
-const [news2,newsSet2]=useState([]);
-const [news3,newsSet3]=useState([]);
-const fetchNews = async () => {
-  try {
-      const news = await axios.get("https://newsapi.org/v2/top-headlines?country=in&category=health&apiKey=f9de620adab044ea852839ab79673f0b");
-      const randomIndex = Math.floor(Math.random() * 5);
-      const randomIndex1 = Math.floor(Math.random() * 20);
-      const randomIndex2 = Math.floor(Math.random() * 25);
-      const randomIndex3 = Math.floor(Math.random() * 30);
-      const newsData = news.data.articles[randomIndex];
-      const newsData1 = news.data.articles[randomIndex1];
-      const newsData2 = news.data.articles[randomIndex2];
-      const newsData3 = news.data.articles[randomIndex3];
-      newsSet(newsData);
-      newsSet1(newsData1);
-      newsSet2(newsData2);
-      newsSet3(newsData3);
-  } catch (error) {
-      console.error("Error fetching news:", error);
-  }
-}
+    const [news,newsSet]=useState([]);
 
-useEffect(() => {
-    fetchNews();
-}, []);
+    let newsStore=news.map((ele,index)=>{
+          return <Mynewscard key={index} newsCollection={ele}/>
+    })
 
-
-  return (
-    <div>
-     <Mynewscard newsCollection={news} newsCollection1={news1} newsCollection2={news2} newsCollection3={news3} />
+    const fetchNews = async () => {
+          const news = await fetch("https://newsapi.org/v2/top-headlines?country=in&category=health&apiKey=f9de620adab044ea852839ab79673f0b");
+          const json= await news.json();
+          const newsData = json.articles;
+          newsSet(newsData);
+      }
+    
+    useEffect(() => {
+        fetchNews();
+    }, []);
+  
+      return (
+        <div className="container px-5 py-24 mx-auto flex flex-wrap justify-center">
+        {newsStore}
     </div>
-  )
+      )
 }
 
 export default Main
